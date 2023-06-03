@@ -1,0 +1,16 @@
+[package]
+name = "maestrodejuegos"
+version = "0.0.1"
+edition = "2021"
+description = "Muestra todos los logros que faltan en un perfil de Steam"
+repository = "https://github.com/saphyel/maestrodejuegos"
+license = "OSL-3.0"
+
+[dependencies]
+clap = { version = "4.0", features = ["derive"] }
+reqwest = { version = "0.11", features = ["blocking", "gzip", "json"] }
+serde = { version = "1.0", features = ["derive"] }
+
+[dev-dependencies]
+cargo-audit = "0.17.6"
+mockall = "0.11.4"
