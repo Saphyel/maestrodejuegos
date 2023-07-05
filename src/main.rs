@@ -1,3 +1,4 @@
+
 use std::env;
 
 use ::clap::{Args, Parser, Subcommand};
@@ -40,7 +41,8 @@ enum Commands {
     Estado(Estado),
 }
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let cli = Cli::parse();
     let client = SteamClient::build(
         String::from("https://api.steampowered.com"),
@@ -49,15 +51,15 @@ fn main() {
     match &cli.command {
         Some(Commands::Usuario(usuario)) => {
             let msg = vanity_url(&client, &usuario.nombre);
-            println!("Steam ID: {:#?}", msg.unwrap());
+            println!("Steam ID: {:#?}", msg.await.unwrap());
         }
         Some(Commands::Jugador(jugador)) => {
             let msg = player_profile(&client, &jugador.steam_id);
-            println!("Jugador: {:#?}", msg.unwrap());
+            println!("Jugador: {:#?}", msg.await.unwrap());
         }
         Some(Commands::Estado(estado)) => {
             let msg = player_achievements(&client, &estado.steam_id, &estado.game_id);
-            println!("Estado: {:#?}", msg.unwrap());
+            println!("Estado: {:#?}", msg.await.unwrap());
         }
         None => {}
     }
